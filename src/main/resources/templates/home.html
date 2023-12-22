@@ -1,0 +1,43 @@
+<html lang="en">
+<head>
+    <title>Todos</title>
+</head>
+<body>
+<h1>Todos</h1>
+<ul>
+    <li th:each="todo : ${todos}">
+        [[${todo.getTitle()}]]
+        <button th:attr="id=${todo.getId()}" onclick="deleteTodo(this)" type="submit" class="btn btn-sm btn-danger">
+            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+            DELETE
+        </button>
+
+    </li>
+</ul>
+</body>
+<script>
+
+    function deleteTodo(button) {
+        debugger;
+        const todoId = parseInt( button.id); // Get the todo ID from the button's ID
+
+        // Send an AJAX request to delete the todo using the ID
+        fetch(`/home/delete/${todoId}`, { method: 'GET'})
+            .then(response => {
+                console.log(response);
+                if (response.ok) {
+                  window.location.href = "/home";
+                } else {
+                    // Handle error
+
+
+                }
+            }) .catch(error => {
+
+                console.log("Fetch error");
+                console.log(error);
+            });
+    }
+
+</script>
+</html>
